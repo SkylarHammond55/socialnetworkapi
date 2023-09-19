@@ -1,0 +1,29 @@
+{
+  "name": "social-network-api",
+  "version": "1.0.0",
+  "description": "Social Media API with noSQL MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SkylarHammond55/socialnetworkapi.git"
+  },
+  "keywords": [
+    "MongoDB",
+    "mongoose",
+    "express.js"
+  ],
+  "author": "Skylar Hammond",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SkylarHammond55/socialnetworkapi/issues"
+  },
+  "homepage": "https://github.com/SkylarHammond55/socialnetworkapi#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^7.0.2"
+  }
+}
