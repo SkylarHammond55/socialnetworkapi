@@ -1,62 +1,24 @@
-const { Schema, model } = require('mongoose');
-const moment = require('moment');
+const router = require('express').Router();
+const { 
+    getThoughts,
+    getSingleThought,
+    createThought,
+    updateThought,
+    deleteThought,
+    addReaction,
+    removeReaction
+} = require('../../controllers/thoughtController');
 
-const reactionSchema = new Schema(
-    {
-        reactionID: {
-            type: Schema.Types.ObjectId,
-            default: () => new Types.ObjectId(),
-        },
-        reactionBody: {
-            type: String,
-            required: true,
-            maxLength: 280,
-        },
-        username: {
-            type: String,
-            required: true,
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now,
-            get: (timestamp) => moment(timestamp).format('MMM, Do, YYYY [at] HH:MM a'),
-        },
-    }
-);
+//  /api/thoughts
+router.route('/').get(getThoughts).post(createThought);
 
-const thoughtSchema = new Schema(
-    {
-        thoughtText: {
-            type: String,
-            required: true,
-            minLength: 1,
-            maxLength: 280,
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now,
-            get: (timestamp) => moment(timestamp).format('MMM, Do, YYYY [at] HH:MM a'),
-        },
-        username: {
-            type: String,
-            required: true,
-        },
-        reactions: [reactionSchema],
-    },
-    {
-        toJSON: {
-            virtuals: true,
-        },
-        id: false,
-    }
-);
+//  /api/thoughts/:thoughtId
+router.route('/:thoughtId').get(getSingleThought).put(updateThought).delete(deleteThought);
 
-thoughtSchema
-    .virtual('reactionCount')
-    .get(function() {
-        return this.reactions.length;
-    });
+//  /api/thoughts/:thoughtId/reactions
+router.route('/:thoughtId/reactions').post(addReaction);
 
-const Thought = model('thought', thoughtSchema);
+//  /api/thoughts/:thoughtId/reactions/:reactionId
+router.route('/:thoughtId/reactions/:reactionId').delete(removeReaction);
 
-module.exports = Thought;
+module.exports = router;
