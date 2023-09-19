@@ -1,47 +1,14 @@
-const { Schema, model } = require('mongoose');
+const router = require('express').Router();
+const {
+    getUsers,
+    GetSingleUser,
+    createUser,
+    updateUser,
+    deleteUser
+} = require('../../controllers/userController');
 
-const userSchema = new Schema(
-    {
-        username: {
-            type: String,
-            unique: true,
-            required: true,
-            trim: true
-        },
-        email: {
-            type: String,
-            unique: true,
-            required: true,
-            match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/]
-        },
-        thoughts: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'thought',
-            },
-        ],
-        // Figure out self referencing for friends
-        friends: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'user'
-            },
-        ],
-    },
-    {
-        toJSON: {
-            virtuals: true,
-        },
-        id: false,
-    }
-);
+router.route('/').get(getUsers).post(createUser);
 
-userSchema
-    .virtual('friendCount')
-    .get(function() {
-        return this.friends.length;
-    });
+router.route('/:userId').get(GetSingleUser).put(updateUser).delete(deleteUser);
 
-const User = model('user', userSchema);
-
-module.exports = User;
+module.exports = router;
