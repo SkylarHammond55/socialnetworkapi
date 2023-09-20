@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/SkylarHammond55/socialnetworkapi#readme",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "express": "^4.17.1",
     "moment": "^2.29.4",
     "mongoose": "^7.0.2"
